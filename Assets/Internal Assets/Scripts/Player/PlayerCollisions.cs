@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Controller2D : MonoBehaviour
+public class PlayerCollisions : MonoBehaviour
 {
 	public LayerMask collisionMask;
 
 	public RaycastOrigins raycastOrigins;
 	public const float skinWidth = .015f;
-	public int horizontalRayCount = 4;
-	public int verticalRayCount = 4;
+	public int horizontalRayCount = 5;
+	public int verticalRayCount = 5;
 
 	float maxClimbAngle = 80;
 
@@ -65,14 +65,9 @@ public class Controller2D : MonoBehaviour
 			Debug.DrawRay(rayOrigin, Vector2.right * directionX * Time.deltaTime * rayLength, Color.green);
 			if (hit)
 			{
-				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-
-				
 				collisions.left = directionX == -1;
 				collisions.right = directionX == 1;
 				rayLength = hit.distance;
-
-
 			}
 		}
 	}

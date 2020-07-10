@@ -97,9 +97,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolSize: 10
   damage: 10
-  bulletSpeed: 20
+  bulletSpeed: 30
   poolTag: pistol_bullet
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 1807038460845658, guid: 71cfc6c8829d2bd4ba3cd0d77635e5dc,
+    type: 3}
   bulletSize: {x: 0.5, y: 0.5}
   aimHand: {fileID: 4564373190894380}
   firePoint: {fileID: 4631676510230996}
@@ -176,12 +177,16 @@ GameObject:
   - component: {fileID: 4279675818948106}
   - component: {fileID: 212092418378286496}
   - component: {fileID: 50429508592146038}
-  - component: {fileID: 114934657213071120}
-  - component: {fileID: 114125863425556310}
   - component: {fileID: 61558861530848650}
-  m_Layer: 0
+  - component: {fileID: 114125863425556310}
+  - component: {fileID: 114934657213071120}
+  - component: {fileID: 653160332}
+  - component: {fileID: 653160333}
+  - component: {fileID: 653160334}
+  - component: {fileID: 653160335}
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,7 +198,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960905410446430}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.11, y: -3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -272,62 +277,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &114934657213071120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960905410446430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4b527f69cb40e640925269ebd284631, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flySpeed: 7.6
-  _startMoveTime: 4
-  _stopMoveTime: 4
-  _rotationSpeed: 10
-  _normalizeRotationSpeed: 7
-  _gravityCof: 1
-  _flyFallMultiplier: 0.3
-  _fuelReduction: 135
-  _fuelReplenishment: 70
-  isFly: 0
-  fuelBar: {fileID: 0}
---- !u!114 &114125863425556310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960905410446430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3361bd18e9f4d9147a1d8573df1b83d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 18
-  _startMoveTime: 8
-  _stopMoveTime: 10
-  isMove: 0
-  _airStartMoveTime: 2
-  _airStopMoveTime: 4
-  smoothWalk: 0
-  _jumpPower: 30
-  _jumpHeight: 1
-  _minJumpHeight: 0.5
-  _gravity: 20
-  _fallMultiplier: 0.85
-  _lowJumpMultiplier: 1.5
-  _coyoteTime: 0.07
-  isJump: 0
-  isGrounded: 1
-  isCeiling: 0
-  slopeCheckDistance: 0
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!61 &61558861530848650
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -354,3 +303,132 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114125863425556310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960905410446430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3361bd18e9f4d9147a1d8573df1b83d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothWalk: 0
+  fallMultiplier: 0
+  lowJumpMultiplier: 0
+  isGrounded: 1
+  isCeiling: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 512
+  controller: {fileID: 0}
+  jetpack: {fileID: 0}
+  playerStates: {fileID: 0}
+  playerMovement: {fileID: 0}
+  playerSlopeMove: {fileID: 0}
+  playerJump: {fileID: 0}
+  newVelocity: {x: 0, y: 0}
+--- !u!114 &114934657213071120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960905410446430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4b527f69cb40e640925269ebd284631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flySpeed: 0
+  startMoveTime: 0
+  stopMoveTime: 0
+  rotationSpeed: 0
+  normalizeRotationSpeed: 0
+  gravityCof: 0
+  flyFallMultiplier: 0
+  fuelReduction: 0
+  fuelReplenishment: 0
+  isFly: 0
+  fuelBar: {fileID: 0}
+--- !u!114 &653160332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960905410446430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 965b54dcd69e5de49b27eee1995855e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  horizontalRayCount: 4
+  verticalRayCount: 10
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
+--- !u!114 &653160333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960905410446430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded6fccc3a444b64d91be76029f5d910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMove: 0
+  speed: 18
+  startMoveTime: 33
+  stopMoveTime: 33
+  airStartMoveTime: 3
+  airStopMoveTime: 3
+  airMoveCof: 1.2
+  jetpackStartMoveTime: 0
+  jetpackStopMoveTime: 0
+  lastKey: 0
+  playerStates: {fileID: 0}
+--- !u!114 &653160334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960905410446430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533ba270f2327b244a784cd4ad97a2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slopeCheckDistance: 1.24
+  isOnSlope: 0
+  slopeNormalPerp: {x: 0, y: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 512
+  hitGround: {x: 0, y: 0}
+  playerController: {fileID: 0}
+  playerStates: {fileID: 0}
+--- !u!114 &653160335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960905410446430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da0ece1676a4974c88c4e55641751ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpPower: 5.86
+  jumpHeight: 2.46
+  minJumpHeight: 1.05
+  coyoteTime: 0.07

@@ -13,10 +13,10 @@ InputManager:
     positiveButton: right
     altNegativeButton: a
     altPositiveButton: d
-    gravity: 0.001
-    dead: 999999
+    gravity: 999999
+    dead: 0.0001
     sensitivity: 999999
-    snap: 1
+    snap: 0
     invert: 0
     type: 0
     axis: 0
@@ -301,6 +301,38 @@ InputManager:
     positiveButton: space
     altNegativeButton: 
     altPositiveButton: joystick button 1
+    gravity: 9999999
+    dead: 0.0001
+    sensitivity: 9999999
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Left
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: left
+    positiveButton: 
+    altNegativeButton: a
+    altPositiveButton: 
+    gravity: 9999999
+    dead: 0.0001
+    sensitivity: 9999999
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Right
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: right
+    altNegativeButton: 
+    altPositiveButton: d
     gravity: 9999999
     dead: 0.0001
     sensitivity: 9999999

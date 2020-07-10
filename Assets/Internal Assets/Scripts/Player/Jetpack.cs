@@ -5,88 +5,61 @@ using UnityEngine;
 public class Jetpack : MonoBehaviour {
 
 	private Rigidbody2D rb;
-	private PlayerController player;
 	[Header("Полет")]
-	public float _flySpeed;
-	private float flySpeed;
+	[SerializeField] private float flySpeed;
 	public float FlySpeed { get { return flySpeed; } set { flySpeed = value; } }
-	public float _startMoveTime;
-	private float startMoveTime;
+	[SerializeField]  private float startMoveTime;
 	public float StartMoveTime { get { return startMoveTime; } set { startMoveTime = value; } }
-	public float _stopMoveTime;
-	private float stopMoveTime;
+	[SerializeField] private float stopMoveTime;
 	public float StopMoveTime { get { return stopMoveTime; } set { stopMoveTime = value; } }
 	[Header("Вращение")]
 
 	[Range(0f, 10f)]
-	public float _rotationSpeed;
-	private float rotationSpeed;
+	[SerializeField] private float rotationSpeed;
 	public float RotationSpeed { get { return rotationSpeed; } set { rotationSpeed = value; } }
 	[Range(0f, 10f)]
-	public float _normalizeRotationSpeed;
-	private float normalizeRotationSpeed;
+	[SerializeField]  private float normalizeRotationSpeed;
 	public float NormalizeRotationSpeed { get { return normalizeRotationSpeed; } set { normalizeRotationSpeed = value; } }
 
 	[Header("Падение")]
 	[Range(1f, 2f)]
-	public float _gravityCof;
-	private float gravityCof;
+	[SerializeField] private float gravityCof;
+
 	[Range(0f, 2f)]
-	public float _flyFallMultiplier;
-	private float flyFallMultiplier;
+	[SerializeField] private float flyFallMultiplier;
 
 	[Header("Топливо")]
 	private float maxFuel;
 	private float fuel;
 	public float Fuel { get { return fuel; } set { fuel = value; } }
-	public float _fuelReduction;
-	private float fuelReduction;
-	public float _fuelReplenishment;
-	private float fuelReplenishment;
+	[SerializeField] private float fuelReduction;
+	[SerializeField] private float fuelReplenishment;
 
 
 	private bool canFly = false;
 	[HideInInspector]
 	public bool isFly = false;
 
+	
+
+	[Header("Scripts")]
 	public FuelBar fuelBar;
+	private PlayerController playerController;
+	private PlayerStates playerStates;
+
 
 	void Start()
 	{
-		player = GetComponent<PlayerController>();
+		playerController = GetComponent<PlayerController>();
+		playerStates = PlayerStates.Instance;
 		rb = GetComponent<Rigidbody2D>();
-		//test stuff
-		flySpeed = _flySpeed;
-		startMoveTime = _startMoveTime;
-		stopMoveTime = _stopMoveTime;
-		rotationSpeed = _rotationSpeed;
-		normalizeRotationSpeed = _normalizeRotationSpeed;
-		gravityCof = _gravityCof;
-		flyFallMultiplier = _flyFallMultiplier;
-		fuelReduction = _fuelReduction;
-		fuelReplenishment = _fuelReplenishment;
-		//
+
 		maxFuel = 100f;
 		fuel = maxFuel;
 		fuelBar.SetMaxFuel(maxFuel);
 
-		curGrav = player.Gravity;
-		curFlyCof = player.FallMultiplier;
-	}
-
-	// Update is called once per frame
-	void Update() {
-		//test stuff
-		flySpeed = _flySpeed;
-		startMoveTime = _startMoveTime;
-		stopMoveTime = _stopMoveTime;
-		rotationSpeed = _rotationSpeed;
-		normalizeRotationSpeed = _normalizeRotationSpeed;
-		gravityCof = _gravityCof;
-		flyFallMultiplier = _flyFallMultiplier;
-		fuelReduction = _fuelReduction;
-		fuelReplenishment = _fuelReplenishment;
-		//
+		curGrav = playerController.Gravity;
+		curFlyCof = playerController.FallMultiplier;
 	}
 
 	private float curGrav;
@@ -94,7 +67,9 @@ public class Jetpack : MonoBehaviour {
 	private float zRotation;
 	public void Fly(float flySpeed)
 	{
-		if (fuel > 0 && !player.isJump)
+		var curMove = playerStates.curState;
+
+		if (fuel > 0 )
 		{
 			canFly = true;
 		}
@@ -103,28 +78,28 @@ public class Jetpack : MonoBehaviour {
 			isFly = false;
 			canFly = false;
 			/*player._fallMultiplier = curFlyCof; // изменить на приватный fallMultiplier*/
-			player.Gravity = curGrav;
+			playerController.Gravity = curGrav;
 		}
 
-		if(Input.GetButton("Jetpack") && player.isJump)
+		if(Input.GetButton("Jetpack"))
 		{
 			rb.velocity = Vector2.zero;
 		}
 
-		if (Input.GetButtonDown("Jetpack") && !player.isJump && !player.CanJump && canFly)
+		if (Input.GetButtonDown("Jetpack") /*&& !playerController.isJump && !playerController.CanJump*/ && canFly)
 		{
 			rb.velocity = Vector2.zero;
-			if (player.Gravity == curGrav)
+			if (playerController.Gravity == curGrav)
 			{
-				player.Gravity /= gravityCof;
+				playerController.Gravity /= gravityCof;
 				/*player._fallMultiplier = flyFallMultiplier; // изменить на приватный fallMultiplier*/
 			}
 		}
-		if (Input.GetButton("Jetpack") && !player.isJump && canFly)
+		if (Input.GetButton("Jetpack") /*&& !playerController.isJump*/ && canFly)
 		{
 			isFly = true;
 			Vector2 fly = Vector2.up * flySpeed;
-			/*rb.AddForce(transform.rotation.normalized * fly, ForceMode2D.Impulse);*/
+			rb.AddForce(transform.rotation.normalized * fly, ForceMode2D.Impulse);
 			
 		}
 
@@ -138,7 +113,7 @@ public class Jetpack : MonoBehaviour {
 
 	public void FlyRotation(float rotationSpeed, float normalizeRotationSpeed)
 	{
-		zRotation = Mathf.Clamp(zRotation - player.Movement * rotationSpeed, -10, 10);
+		/*zRotation = Mathf.Clamp(zRotation - player.Movement * rotationSpeed, -10, 10);
 
 		if (isFly && player.isMove)
 		{
@@ -150,7 +125,7 @@ public class Jetpack : MonoBehaviour {
 		if (player.IsGrounded || fuel <= 0)
 		{
 			transform.rotation = Quaternion.identity;
-		}
+		}*/
 	}
 
 	public float SetFuel(float fuel)
@@ -169,7 +144,7 @@ public class Jetpack : MonoBehaviour {
 		}
 		else
 		{
-			if(fuel < maxFuel && player.IsGrounded)
+			if(fuel < maxFuel && playerController.IsGrounded)
 			{
 				fuel += fuelReplenishment * Time.deltaTime;
 				fuelBar.SetFuel(fuel);
